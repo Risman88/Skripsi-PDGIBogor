@@ -1,6 +1,6 @@
 <x-dashboard-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Pengelolaan Pengajuan') }}
         </h2>
     </x-slot>
@@ -15,19 +15,19 @@
                 </form>
             </div>
 
-            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Pengajuan Diproses</h3>
+            <h3 class="text-lg font-semibold text-gray-800">Pengajuan Diproses</h3>
             @include('submission.partials.table_admin', ['submissions' => $submissionsDiproses, 'show_surat' => false])
             <div class="mt-4">
             {{ $submissionsDiproses->withQueryString()->appends(['ditolak' => $submissionsDitolak->currentPage(), 'selesai' => $submissionsSelesai->currentPage()])->links() }}
             </div>
             <div class="border-t-2 border-gray-300 my-12"></div>
-            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mt-12">Pengajuan Selesai</h3>
+            <h3 class="text-lg font-semibold text-gray-800 mt-12">Pengajuan Selesai</h3>
             @include('submission.partials.table_admin', ['submissions' => $submissionsSelesai, 'show_surat' => true])
             <div class="mt-4">
             {{ $submissionsSelesai->withQueryString()->appends(['diproses' => $submissionsDiproses->currentPage(), 'ditolak' => $submissionsDitolak->currentPage()])->links() }}
             </div>
             <div class="border-t-2 border-gray-300 my-12"></div>
-            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mt-12">Pengajuan Ditolak</h3>
+            <h3 class="text-lg font-semibold text-gray-800 mt-12">Pengajuan Ditolak</h3>
             @include('submission.partials.table_admin', ['submissions' => $submissionsDitolak, 'show_surat' => false])
             <div class="mt-4">
             {{ $submissionsDitolak->withQueryString()->appends(['diproses' => $submissionsDiproses->currentPage(), 'selesai' => $submissionsSelesai->currentPage()])->links() }}

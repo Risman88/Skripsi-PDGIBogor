@@ -1,12 +1,12 @@
 <x-dashboard-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Konfirmasi Kehadiran Wawancara') }}
         </h2>
     </x-slot>
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Kehadiran Wawancara</h3>
+        <h3 class="text-lg font-semibold text-gray-800">Kehadiran Wawancara</h3>
 
         <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-14">
             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">

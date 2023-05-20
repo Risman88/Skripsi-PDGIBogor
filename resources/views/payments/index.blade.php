@@ -1,17 +1,17 @@
 <x-dashboard-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Pembayaran') }}
         </h2>
     </x-slot>
 @can('iuran')
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
         <div class="px-4 py-3 bg-gray-200 shadow sm:rounded-lg">
-            <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200 mb-4">Pilihan Pembayaran Iuran</h3>
+            <h3 class="text-lg font-medium text-gray-800 mb-4">Pilihan Pembayaran Iuran</h3>
             <form action="{{ route('payments.bayar-iuran') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
-                    <label class="block text-gray-700 dark:text-gray-300 font-medium mb-2" for="duration">
+                    <label class="block text-gray-700 font-medium mb-2" for="duration">
                         Durasi Pembayaran
                     </label>
                     <div class="relative">
@@ -34,10 +34,10 @@
 
         <div class="border-t-2 border-gray-300 my-12"></div>
         @endcan
-        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Menunggu Pembayaran</h3>
+        <h3 class="text-lg font-semibold text-gray-800">Menunggu Pembayaran</h3>
         @include('payments.payment_table', ['payments' => $unpaidAndPendingPayments])
         <div class="border-t-2 border-gray-300 my-12"></div>
-        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mt-12">Histori Pembayaran</h3>
+        <h3 class="text-lg font-semibold text-gray-800 mt-12">Histori Pembayaran</h3>
         @include('payments.payment_table', ['payments' => $completedPayments])
     </div>
 </x-dashboard-layout>

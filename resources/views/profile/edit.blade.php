@@ -1,6 +1,6 @@
 <x-dashboard-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Profile') }}
         </h2>
     </x-slot>
@@ -17,25 +17,25 @@
             </div>
 
             <!-- Tab content -->
-            <div class="p-4 sm:p-8 bg-gray-200 dark:bg-gray-800 shadow sm:rounded-lg" x-show="tab === 'profile'">
+            <div class="p-4 sm:p-8 bg-gray-200 shadow sm:rounded-lg" x-show="tab === 'profile'">
                 <div class="max-w-xl">
                     @include('profile.partials.update-profile-information-form')
                 </div>
             </div>
 
-            <div class="p-4 sm:p-8 bg-gray-200 dark:bg-gray-800 shadow sm:rounded-lg" x-show="tab === 'document'">
+            <div class="p-4 sm:p-8 bg-gray-200 shadow sm:rounded-lg" x-show="tab === 'document'">
                 <div class="max-w-xl">
                     @include('profile.partials.update-profile-document')
                 </div>
             </div>
 
-            <div class="p-4 sm:p-8 bg-gray-200 dark:bg-gray-800 shadow sm:rounded-lg" x-show="tab === 'email'">
+            <div class="p-4 sm:p-8 bg-gray-200 shadow sm:rounded-lg" x-show="tab === 'email'">
                 <div class="max-w-xl">
                     @include('profile.partials.update-email-form')
                 </div>
             </div>
 
-            <div class="p-4 sm:p-8 bg-gray-200 dark:bg-gray-800 shadow sm:rounded-lg" x-show="tab === 'password'">
+            <div class="p-4 sm:p-8 bg-gray-200 shadow sm:rounded-lg" x-show="tab === 'password'">
                 <div class="max-w-xl">
                     @include('profile.partials.update-password-form')
                 </div>

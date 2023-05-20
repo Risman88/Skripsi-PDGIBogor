@@ -1,6 +1,6 @@
 <x-dashboard-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Data Pembayaran') }}
         </h2>
     </x-slot>
@@ -21,17 +21,17 @@
 
 
 
-        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Menunggu Konfirmasi</h3>
+        <h3 class="text-lg font-semibold text-gray-800">Menunggu Konfirmasi</h3>
         @include('payments.payment_table_admin', ['payments' => $pendingPayments, 'paginationName' => 'pending_page', 'show_bukti' => true, 'show_by' => false])
 
         <div class="border-t-2 border-gray-300 my-12"></div>
 
-        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Belum Dibayar</h3>
+        <h3 class="text-lg font-semibold text-gray-800">Belum Dibayar</h3>
         @include('payments.payment_table_admin', ['payments' => $unpaidPayments, 'paginationName' => 'unpaid_page', 'show_bukti' => false, 'show_by' => false])
 
         <div class="border-t-2 border-gray-300 my-12"></div>
 
-        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Lunas</h3>
+        <h3 class="text-lg font-semibold text-gray-800">Lunas</h3>
         @include('payments.payment_table_admin', ['payments' => $completedPayments, 'paginationName' => 'completed_page', 'show_bukti' => true, 'show_by' => true])
     </div>
 </x-dashboard-layout>
