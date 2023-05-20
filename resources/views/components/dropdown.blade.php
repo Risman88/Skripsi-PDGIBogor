@@ -16,7 +16,7 @@
     </button>
 
     <!-- Dropdown menu -->
-    <div x-show="open" @click.away="open = true"
+    <div x-show="open" @click.away="open = false"
         class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50"
         role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
         <div class="py-1">
