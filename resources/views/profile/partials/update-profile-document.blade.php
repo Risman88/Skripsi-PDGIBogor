@@ -7,6 +7,7 @@
         <p class="mt-1 text-sm text-gray-600">
             {{ __('Unggah dokumen yang diperlukan. Anda tidak dapat mengubah dokumen setelah diunggah. Apabila ada kesalahan unggah dokumen hubungi Pengurus') }}
         </p>
+        <span class= "text-gray-500 text-sm px-1 inline-block">Maksimal ukuran file unggah: 1024 KB, format file: png, jpg, jpeg, atau pdf</span>
     </header>
 
     <form method="post" action="{{ route('user_document.update') }}" enctype="multipart/form-data" class="mt-6 space-y-6">
