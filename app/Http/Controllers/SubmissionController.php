@@ -214,9 +214,7 @@ class SubmissionController extends Controller
                     'jumlah_pembayaran' => $paymentAmount,
                     'jangka_iuran' => 365,
                     'status' => 'Belum dibayar',
-                    'nama_bank' => 'BCA',
-                    'nomor_rekening' => '7380537707',
-                    'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                    'bank_account_id' => 1,
                     'payment_proof' => null,
                 ]);
 
@@ -294,9 +292,7 @@ class SubmissionController extends Controller
                     'jenis_pembayaran' => $jenisPembayaran,
                     'jumlah_pembayaran' => $paymentAmount,
                     'status' => 'Belum dibayar',
-                    'nama_bank' => 'BCA',
-                    'nomor_rekening' => '7380537707',
-                    'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                    'bank_account_id' => 1,
                     'payment_proof' => null,
                 ]);
 
@@ -371,9 +367,7 @@ class SubmissionController extends Controller
                     'jenis_pembayaran' => $jenisPembayaran,
                     'jumlah_pembayaran' => $paymentAmount,
                     'status' => 'Belum dibayar',
-                    'nama_bank' => 'BCA',
-                    'nomor_rekening' => '7380537707',
-                    'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                    'bank_account_id' => 1,
                     'payment_proof' => null,
                 ]);
 
@@ -448,9 +442,7 @@ class SubmissionController extends Controller
                     'jenis_pembayaran' => $jenisPembayaran,
                     'jumlah_pembayaran' => $paymentAmount,
                     'status' => 'Belum dibayar',
-                    'nama_bank' => 'BCA',
-                    'nomor_rekening' => '7380537707',
-                    'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                    'bank_account_id' => 1,
                     'payment_proof' => null,
                 ]);
 
@@ -526,9 +518,7 @@ class SubmissionController extends Controller
                     'jenis_pembayaran' => $jenisPembayaran,
                     'jumlah_pembayaran' => $paymentAmount,
                     'status' => 'Belum dibayar',
-                    'nama_bank' => 'BCA',
-                    'nomor_rekening' => '7380537707',
-                    'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                    'bank_account_id' => 1,
                     'payment_proof' => null,
                 ]);
 
@@ -603,9 +593,7 @@ class SubmissionController extends Controller
                     'jenis_pembayaran' => $jenisPembayaran,
                     'jumlah_pembayaran' => $paymentAmount,
                     'status' => 'Belum dibayar',
-                    'nama_bank' => 'BCA',
-                    'nomor_rekening' => '7380537707',
-                    'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                    'bank_account_id' => 1,
                     'payment_proof' => null,
                 ]);
 
@@ -645,9 +633,7 @@ class SubmissionController extends Controller
                     'jenis_pembayaran' => $jenisPembayaran,
                     'jumlah_pembayaran' => $paymentAmount,
                     'status' => 'Belum dibayar',
-                    'nama_bank' => 'BCA',
-                    'nomor_rekening' => '7380537707',
-                    'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                    'bank_account_id' => 1,
                     'payment_proof' => null,
                 ]);
 
@@ -685,9 +671,7 @@ class SubmissionController extends Controller
                     'jenis_pembayaran' => $jenisPembayaran,
                     'jumlah_pembayaran' => $paymentAmount,
                     'status' => 'Belum dibayar',
-                    'nama_bank' => 'BCA',
-                    'nomor_rekening' => '7380537707',
-                    'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                    'bank_account_id' => 1,
                     'payment_proof' => null,
                 ]);
 

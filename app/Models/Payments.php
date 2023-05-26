@@ -15,9 +15,7 @@ class Payments extends Model
         'jangka_iuran',
         'jumlah_pembayaran',
         'status',
-        'nama_bank',
-        'nomor_rekening',
-        'nama_rekening',
+        'bank_account_id',
         'bukti_pembayaran',
         'updated_by',
     ];
@@ -34,5 +32,9 @@ class Payments extends Model
     public function updatedBy()
     {
         return $this->belongsTo(User::class, 'updated_by');
+    }
+    public function bankAccount()
+    {
+        return $this->belongsTo(BankAccount::class);
     }
 }

@@ -160,9 +160,7 @@ class PaymentsController extends Controller
              'jenis_pembayaran' => $jenis_pembayaran,
              'jangka_iuran' => $jangkaIuran,
              'jumlah_pembayaran' => $jumlahPembayaran,
-             'nama_bank' => 'BCA',
-             'nomor_rekening' => '7380537707',
-             'nama_rekening' => 'Rini Utari Anggraeni, drg',
+             'bank_account_id' => 1,
              'status' => 'Belum dibayar',
          ]);
 

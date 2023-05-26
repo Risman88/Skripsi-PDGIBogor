@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             SubmissionTypeSeeder::class,
             SubmissionSeeder::class,
+            BankAccountSeeder::class,
         ]);
     }
 }

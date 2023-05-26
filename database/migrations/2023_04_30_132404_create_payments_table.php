@@ -19,9 +19,7 @@ return new class extends Migration
             $table->integer('jangka_iuran')->nullable();
             $table->integer('jumlah_pembayaran');
             $table->enum('status', ['Belum dibayar', 'Menunggu konfirmasi', 'Lunas']);
-            $table->string('nama_bank', 20);
-            $table->string('nomor_rekening', 20);
-            $table->string('nama_rekening', 50);
+            $table->foreignId('bank_account_id')->nullable()->constrained()->onDelete('set null');
             $table->string('bukti_pembayaran')->nullable();
             $table->foreignId('updated_by')->nullable()->references('id')->on('users')->onDelete('set null');
             $table->timestamps();

@@ -50,13 +50,13 @@
                                 Rp {{ number_format($payment->jumlah_pembayaran, 0, ',', '.') }}
                             </td>
                             <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
-                                {{ $payment->nama_bank }}
+                                {{ $payment->bankAccount->nama_bank }}
                             </td>
                             <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
-                                {{ $payment->nama_rekening }}
+                                {{ $payment->bankAccount->nama_rekening }}
                             </td>
                             <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
-                                {{ $payment->nomor_rekening }}
+                                {{ $payment->bankAccount->nomor_rekening }}
                             </td>
                             <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
                                 @if ($payment->status === 'Belum dibayar')
