@@ -29,9 +29,7 @@ class SubmissionSeeder extends Seeder
                 'jenis_pembayaran'=> 'Pengajuan Anggota dan Pembayaran Iuran 1 Tahun dengan ID Pengajuan  ' . $submission->id,
                 'jangka_iuran'=> 365,
                 'jumlah_pembayaran' =>400000,
-                'nama_bank' => 'BCA',
-                'nomor_rekening' => '7380537707',
-                'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                'bank_account_id' => 1,
                 'status' => 'Belum dibayar',
             ]);
             $payment->save();
@@ -48,9 +46,7 @@ class SubmissionSeeder extends Seeder
                 'submission_id' => $submission->id,
                 'jenis_pembayaran'=> 'Pengajuan SRIP Non-Anggota dengan ID Pengajuan ' . $submission->id,
                 'jumlah_pembayaran' =>400000,
-                'nama_bank' => 'BCA',
-                'nomor_rekening' => '7380537707',
-                'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                'bank_account_id' => 1,
                 'status' => 'Belum dibayar',
             ]);
             $payment->save();
@@ -65,9 +61,7 @@ class SubmissionSeeder extends Seeder
                 'submission_id' => $submission->id,
                 'jenis_pembayaran'=> 'Pengajuan SRIP Anggota Drg dengan ID Pengajuan ' . $submission->id,
                 'jumlah_pembayaran' =>150000,
-                'nama_bank' => 'BCA',
-                'nomor_rekening' => '7380537707',
-                'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                'bank_account_id' => 1,
                 'status' => 'Belum dibayar',
             ]);
             $payment->save();
@@ -82,9 +76,7 @@ class SubmissionSeeder extends Seeder
                 'submission_id' => $submission->id,
                 'jenis_pembayaran'=> 'Pengajuan SRIP Anggota Drg Spesialis dengan ID Pengajuan ' . $submission->id,
                 'jumlah_pembayaran' =>300000,
-                'nama_bank' => 'BCA',
-                'nomor_rekening' => '7380537707',
-                'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                'bank_account_id' => 1,
                 'status' => 'Belum dibayar',
             ]);
             $payment->save();
@@ -99,9 +91,7 @@ class SubmissionSeeder extends Seeder
                 'submission_id' => $submission->id,
                 'jenis_pembayaran'=> 'Pengajuan SPIP Anggota Drg dengan ID Pengajuan ' . $submission->id,
                 'jumlah_pembayaran' =>100000,
-                'nama_bank' => 'BCA',
-                'nomor_rekening' => '7380537707',
-                'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                'bank_account_id' => 1,
                 'status' => 'Belum dibayar',
             ]);
             $payment->save();
@@ -116,9 +106,7 @@ class SubmissionSeeder extends Seeder
                 'submission_id' => $submission->id,
                 'jenis_pembayaran'=> 'Pengajuan SPIP Anggota Drg dengan ID Pengajuan ' . $submission->id,
                 'jumlah_pembayaran' =>250000,
-                'nama_bank' => 'BCA',
-                'nomor_rekening' => '7380537707',
-                'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                'bank_account_id' => 1,
                 'status' => 'Belum dibayar',
             ]);
             $payment->save();
@@ -134,9 +122,7 @@ class SubmissionSeeder extends Seeder
                 'submission_id' => $submission->id,
                 'jenis_pembayaran'=> 'Pengajuan Surat Mutasi dengan ID Pengajuan ' . $submission->id,
                 'jumlah_pembayaran' =>100000,
-                'nama_bank' => 'BCA',
-                'nomor_rekening' => '7380537707',
-                'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                'bank_account_id' => 1,
                 'status' => 'Belum dibayar',
             ]);
             $payment->save();
@@ -151,9 +137,7 @@ class SubmissionSeeder extends Seeder
                 'submission_id' => $submission->id,
                 'jenis_pembayaran'=> 'Pengajuan Surat PPDGS dengan ID Pengajuan ' . $submission->id,
                 'jumlah_pembayaran' =>100000,
-                'nama_bank' => 'BCA',
-                'nomor_rekening' => '7380537707',
-                'nama_rekening' => 'Rini Utari Anggraeni, drg',
+                'bank_account_id' => 1,
                 'status' => 'Belum dibayar',
             ]);
             $payment->save();
