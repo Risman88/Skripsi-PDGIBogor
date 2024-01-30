@@ -22,17 +22,28 @@
                     {{ \Carbon\Carbon::parse($user->iuran_until)->format('d F Y') }}
                 </div>
             </div>
-            <div>
-                <label for="role" class="block text-sm font-medium text-gray-700">{{ __('Peran') }}</label>
-                <select name="role" id="role" required
-                    class="mt-1 block w-full py-2 px-3 border border-black bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    @foreach ($roles as $role)
-                        <option value="{{ $role->name }}"
-                            {{ $user->roles->first()->name === $role->name ? 'selected' : '' }}>{{ $role->name }}
-                        </option>
+            @if (Auth::user()->can('change role'))
+                <div>
+                    <label for="role" class="block text-sm font-medium text-gray-700">{{ __('Peran') }}</label>
+                    <select name="role" id="role" required
+                        class="mt-1 block w-full py-2 px-3 border border-black bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        @foreach ($roles as $role)
+                        @if ($role->name !== 'superadmin')
+                            <option value="{{ $role->name }}"
+                                {{ $user->roles->first()->name === $role->name ? 'selected' : '' }}>{{ $role->name }}
+                            </option>
+                        @endif
                     @endforeach
-                </select>
-            </div>
+                    </select>
+                </div>
+            @else
+                <div>
+                    <label for="role" class="block text-sm font-medium text-gray-700">{{ __('Peran') }}</label>
+                    <div class="mt-1 text-sm text-gray-600">
+                        {{ $user->roles->first()->name }}
+                    </div>
+                </div>
+            @endif
 
             <div>
                 <x-input-label for="email" :value="__('Email')" />

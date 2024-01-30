@@ -23,6 +23,6 @@ class VerifyEmailController extends Controller
             event(new Verified($request->user()));
         }
 
-        return redirect('/')->with('success', 'Anda berhasil verifikasi email anda');
+        return redirect('/dashboard')->with('success', 'Anda berhasil verifikasi email anda');
     }
 }

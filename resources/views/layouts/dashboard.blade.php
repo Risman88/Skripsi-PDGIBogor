@@ -22,9 +22,11 @@
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="flex h-16 items-center justify-between">
                         <div class="flex items-center">
-                            <div class="flex-shrink-0">
-                                <x-dashboard-logo class="h-8 w-8" />
-                            </div>
+                            <a href="{{ route('home') }}">
+                                <div class="flex-shrink-0">
+                                    <x-dashboard-logo class="h-8 w-8" />
+                                </div>
+                            </a>
                             <div class="hidden md:block">
                                 <div class="ml-10 flex items-baseline space-x-4">
 
@@ -108,6 +110,20 @@
                                                         <x-dashboard-dropdown-nav-link :href="route('submission.indexall')" :active="request()->routeIs('submission.indexall')">
                                                             {{ __('Data Pengajuan') }}
                                                         </x-dashboard-dropdown-nav-link>
+                                                    @endcan
+                                                    @can('edit susunan')
+                                                    <x-dashboard-dropdown-nav-link :href="route('panduan.index')" :active="request()->routeIs('panduan.index')">
+                                                        {{ __('Data Panduan') }}
+                                                    </x-dashboard-dropdown-nav-link>
+                                                    <x-dashboard-dropdown-nav-link :href="route('slideshow.index')" :active="request()->routeIs('slideshow.index')">
+                                                        {{ __('Data Banner') }}
+                                                    </x-dashboard-dropdown-nav-link>
+                                                    <x-dashboard-dropdown-nav-link :href="route('gallery.index')" :active="request()->routeIs('gallery.index')">
+                                                        {{ __('Data Galeri') }}
+                                                    </x-dashboard-dropdown-nav-link>
+                                                    <x-dashboard-dropdown-nav-link :href="route('organisasi.index')" :active="request()->routeIs('organisasi.index')">
+                                                        {{ __('Susunan Organisasi') }}
+                                                    </x-dashboard-dropdown-nav-link>
                                                     @endcan
                                     </x-dropdown>
                                     @endcan
@@ -245,6 +261,20 @@
                                         <x-responsive-dashboard-nav-link :href="route('submission.indexall')" :active="request()->routeIs('submission.indexall')" class="ml-3">
                                             {{ __('Data Pengajuan') }}
                                         </x-responsive-dashboard-nav-link>
+                                    @endcan
+                                    @can('edit susunan')
+                                    <x-responsive-dashboard-nav-link :href="route('panduan.index')" :active="request()->routeIs('panduan.index')" class="ml-3">
+                                        {{ __('Data Panduan') }}
+                                    </x-responsive-dashboard-nav-link>
+                                    <x-responsive-dashboard-nav-link :href="route('slideshow.index')" :active="request()->routeIs('slideshow.index')" class="ml-3">
+                                        {{ __('Data Banner') }}
+                                    </x-responsive-dashboard-nav-link>
+                                    <x-responsive-dashboard-nav-link :href="route('gallery.index')" :active="request()->routeIs('gallery.index')" class="ml-3">
+                                        {{ __('Data Galeri') }}
+                                    </x-responsive-dashboard-nav-link>
+                                    <x-responsive-dashboard-nav-link :href="route('organisasi.index')" :active="request()->routeIs('organisasi.index')" class="ml-3">
+                                        {{ __('Susunan Organisasi') }}
+                                    </x-responsive-dashboard-nav-link>
                                     @endcan
                             </x-responsive-dropdown>
                         @endcan

@@ -19,6 +19,7 @@
             'Tahun Lulus' => $submission->submission_izin_praktik->tahun_lulus,
             'Nomor STR' => $submission->submission_izin_praktik->str,
             'Masa Berlaku STR' => $submission->submission_izin_praktik->valid_str,
+            'STR Seumur Hidup' => $submission->submission_izin_praktik->seumur_hidup,
             'Nomor Serkom' => $submission->submission_izin_praktik->serkom,
             'NPA' => $submission->submission_izin_praktik->npa,
             'Cabang PDGI' => $submission->submission_izin_praktik->cabang_pdgi,
@@ -38,13 +39,10 @@
             'scan_surat_sehat' => 'Scan Surat Sehat',
             'surat_mkekg' => 'Surat MKEKG',
         ];
-                    $conditionalElements = [
-                        ($submission->submission_type_id == 2) ? ['scan_surat_pengantar' => 'Scan Surat Pengantar'] : null,
-                        ($submission->submission_type_id == 2 || $submission->submission_type_id == 4 || $submission->submission_type_id == 6) ? ['scan_surat_kolegium' => 'Surat Kolegium'] : null,
-                    ];
+        $conditionalElements = [$submission->submission_type_id == 2 ? ['scan_surat_pengantar' => 'Scan Surat Pengantar'] : null, $submission->submission_type_id == 2 || $submission->submission_type_id == 4 || $submission->submission_type_id == 6 ? ['scan_surat_kolegium' => 'Surat Kolegium'] : null];
 
-                    $filteredConditionalElements = array_filter($conditionalElements);
-                    $scanFiles = array_merge($scanFiles, ...$filteredConditionalElements);
+        $filteredConditionalElements = array_filter($conditionalElements);
+        $scanFiles = array_merge($scanFiles, ...$filteredConditionalElements);
     @endphp
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -53,7 +51,8 @@
     </x-slot>
 
     <a href="{{ url()->previous() }}" class="text-blue-600 hover:text-blue-800">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
         </svg> Kembali ke halaman sebelumnya
     </a>
@@ -110,7 +109,7 @@
                                                     class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-300">
                                             @elseif(
                                                 $key === 'ID Pengajuan' ||
-                                                $key === 'Tipe Pengajuan' ||
+                                                    $key === 'Tipe Pengajuan' ||
                                                     $key === 'Tanggal Pengajuan' ||
                                                     $key === 'Nama' ||
                                                     $key === 'Tempat Lahir' ||
@@ -158,19 +157,29 @@
                                                         {{ $submission->submission_izin_praktik->tujuan_surat == 'Perpanjangan SIP' ? 'selected' : '' }}>
                                                         Perpanjangan SIP</option>
                                                     <option value="Pindah Alamat SIP"
-                                                        {{ $submission->submission_izin_praktik->tujuan_surat == 'Pindah Alamat SIP' ? 'selected' : ''}}>Pindah Alamat SIP</option>
-                                                    </select>
+                                                        {{ $submission->submission_izin_praktik->tujuan_surat == 'Pindah Alamat SIP' ? 'selected' : '' }}>
+                                                        Pindah Alamat SIP</option>
+                                                </select>
+                                            @elseif ($key === 'Masa Berlaku STR')
+                                                <input type="date" name="valid_str"
+                                                    value="{{ $submission->submission_izin_praktik->valid_str }}"
+                                                    class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-300">
+                                            @elseif ($key === 'STR Seumur Hidup')
+                                                <input type="hidden" name="seumur_hidup" value="0">
+                                                <input type="checkbox" name="seumur_hidup" id="seumur_hidup"
+                                                    value="1"
+                                                    {{ $submission->submission_izin_praktik->seumur_hidup ? 'checked' : '' }}>
+                                                <label for="seumur_hidup" class="ml-2 text-sm text-gray-900">STR Seumur
+                                                    Hidup</label>
                                             @else
                                                 @php
                                                     $inputName = '';
-                                                    if  ($key === 'Alumni') {
+                                                    if ($key === 'Alumni') {
                                                         $inputName = 'alumni_drg';
                                                     } elseif ($key === 'Tahun Lulus') {
                                                         $inputName = 'tahun_lulus';
                                                     } elseif ($key === 'Nomor STR') {
                                                         $inputName = 'str';
-                                                    } elseif ($key === 'Masa Berlaku STR') {
-                                                        $inputName = 'valid_str';
                                                     } elseif ($key === 'Nomor Serkom') {
                                                         $inputName = 'serkom';
                                                     } elseif ($key === 'NPA') {

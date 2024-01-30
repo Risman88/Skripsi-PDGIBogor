@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserDocument;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,7 +18,7 @@ class UserController extends Controller
         $role = $request->input('role');
 
         $roles = Role::all();
-        if (!Auth::user()->hasAnyRole('admin', 'interview', 'bendahara')) {
+        if (!Auth::user()->hasAnyRole('admin', 'interview', 'bendahara', 'superadmin')) {
             abort(403, 'Unauthorized access');
         }
         $users = User::query()
@@ -28,6 +29,9 @@ class UserController extends Controller
             ->when($role, function ($query, $role) {
                 return $query->role($role);
             })
+            ->whereDoesntHave('roles', function ($query) {
+                $query->where('name', 'superadmin');
+            })
             ->paginate(10);
 
         return view('users.index', compact('users', 'roles'));
@@ -35,7 +39,7 @@ class UserController extends Controller
 
     public function showUserProfile(User $user)
     {
-        if (!Auth::user()->hasAnyRole('admin', 'interview', 'bendahara')) {
+        if (!Auth::user()->hasAnyRole('admin', 'interview', 'bendahara', 'superadmin')) {
             abort(403, 'Unauthorized access');
         }
         return view('users.show', compact('user'));
@@ -43,7 +47,7 @@ class UserController extends Controller
 
     public function editUser(User $user)
     {
-        if (!Auth::user()->hasRole('admin')) {
+        if (!Auth::user()->hasAnyRole('admin', 'superadmin')) {
             abort(403, 'Unauthorized access');
         }
         $roles = Role::all();
@@ -87,7 +91,7 @@ class UserController extends Controller
     {
 
         $documentData = $user->userDocument;
-        if (!Auth::user()->hasRole('admin')) {
+        if (!Auth::user()->hasAnyRole('admin', 'superadmin')) {
             abort(403, 'Unauthorized access');
         }
         $validatedData = $request->validate([
@@ -108,23 +112,63 @@ class UserController extends Controller
             'scan_drgsp',
             'scan_foto',
         ];
-        // Proses penyimpanan dokumen pengguna yang diperbarui
+        // Proses penyimpanan dokumen pengguna yang diperbarui di S3
         foreach ($scanFiles as $scanFile) {
             if ($request->hasFile($scanFile)) {
                 $file = $request->file($scanFile);
-                // Hapus gambar lama dari penyimpanan jika ada
+
+                // Hapus gambar lama dari penyimpanan S3 jika ada
                 $oldPath = $documentData->{$scanFile};
-                if ($oldPath && Storage::exists($oldPath)) {
-                    Storage::delete($oldPath);
+                if ($oldPath) {
+                    Storage::disk('s3')->delete($oldPath);
                 }
 
-                // Simpan gambar baru dengan path yang sama
-                $path = $file->store('public/images/documents/' . $user->id . '/' . $scanFile);
+                // Simpan gambar baru ke penyimpanan S3
+                $path = $file->store("documents/{$user->id}/{$scanFile}", 's3');
                 $validatedData[$scanFile] = $path;
             }
         }
+
         $documentData->update($validatedData);
 
         return redirect()->route('users.edit', $user->id)->with('success', 'Dokumen pengguna berhasil diperbarui.');
+    }
+    public function deleteUser(User $user)
+    {
+        // Check if the currently authenticated user has the required role for this action
+        if (!Auth::user()->hasRole('superadmin')) {
+            abort(403, 'Unauthorized access');
+        }
+
+        // Retrieve the user's document data
+        $documentData = UserDocument::where('user_id', $user->id)->first();
+
+        // Delete the associated documents from S3 and the database
+        $scanFiles = [
+            'scan_ktp',
+            'scan_kta',
+            'scan_s1',
+            'scan_s2',
+            'scan_drg',
+            'scan_drgsp',
+            'scan_foto',
+        ];
+
+        foreach ($scanFiles as $scanFile) {
+            $path = $documentData->{$scanFile};
+            if ($path) {
+                // Delete the document from S3
+                Storage::disk('s3')->delete($path);
+            }
+        }
+
+        // Delete the document data from the database
+        $documentData->delete();
+
+        // Delete the user's profile
+        $user->delete();
+
+        // Redirect back to the user list with a success message
+        return redirect()->route('users.index')->with('success', 'User and associated documents have been deleted.');
     }
 }

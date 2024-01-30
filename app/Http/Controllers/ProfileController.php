@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -58,7 +59,13 @@ class ProfileController extends Controller
 
         foreach (['scan_kta', 'scan_s1', 'scan_s2', 'scan_drg', 'scan_drgsp', 'scan_ktp', 'scan_foto'] as $key) {
             if ($request->hasFile($key)) {
-                $documentData[$key] = $request->file($key)->store('public/images/documents/' . $user->id . '/' . $key);
+                $file = $request->file($key);
+                $path = 'documents/' . $user->id . '/' . $key;
+                $uploadedFile = Storage::disk('s3')->put($path, $file);
+
+                if ($uploadedFile) {
+                    $documentData[$key] = $uploadedFile;
+                }
             }
         }
 

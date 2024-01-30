@@ -27,7 +27,9 @@
         'Alumni' => $submission->submission_izin_praktik->alumni_drg,
         'Tahun Lulus' => $submission->submission_izin_praktik->tahun_lulus,
         'Nomor STR' => $submission->submission_izin_praktik->str,
-        'Masa Berlaku STR' => \Carbon\Carbon::parse($submission->submission_izin_praktik->valid_str)->format('d-F-Y'),
+        'Masa Berlaku STR' => $submission->submission_izin_praktik->seumur_hidup
+                        ? 'Seumur Hidup'
+                        : \Carbon\Carbon::parse($submission->submission_izin_praktik->valid_str)->format('d-F-Y'),
         'Nomor Serkom' => $submission->submission_izin_praktik->serkom,
         'NPA' => $submission->submission_izin_praktik->npa,
         'Cabang PDGI' => $submission->submission_izin_praktik->cabang_pdgi,

@@ -85,34 +85,35 @@
                                 @endif
                             </td>
                             @if ($show_surat)
-                            <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
-                                @if ($submission->surat_keluar)
-                                    @if (pathinfo($submission->surat_keluar, PATHINFO_EXTENSION) === 'pdf')
-                                        <div class="flex items-center mb-4">
+                                <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
+                                    @if ($submission->surat_keluar)
+                                        @if (pathinfo($submission->surat_keluar, PATHINFO_EXTENSION) === 'pdf')
+                                            <div class="flex items-center mb-4">
+                                                <a href="{{ route('submission.surat_keluar', $submission->id) }}"
+                                                    target="_blank" class="ml-4 flex items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500"
+                                                        viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fill-rule="evenodd"
+                                                            d="M5 2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.414a1 1 0 0 0-.293-.707l-4.586-4.586A1 1 0 0 0 11.586 2H5zm5 2.5a1.5 1.5 0 0 1 1.5 1.5v3.793l1.146 1.147a.5.5 0 0 0 .708-.708L12.5 9.793V7a1.5 1.5 0 0 1 1.5-1.5h1.5a.5.5 0 0 0 0-1H5a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V7.414l-2.146-2.147a.5.5 0 0 0-.708 0l-2.147 2.147z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                    <span class="ml-2 text-blue-500 font-medium">
+                                                        Lihat PDF
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        @else
                                             <a href="{{ route('submission.surat_keluar', $submission->id) }}"
-                                                target="_blank" class="ml-4 flex items-center">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500"
-                                                    viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fill-rule="evenodd"
-                                                        d="M5 2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.414a1 1 0 0 0-.293-.707l-4.586-4.586A1 1 0 0 0 11.586 2H5zm5 2.5a1.5 1.5 0 0 1 1.5 1.5v3.793l1.146 1.147a.5.5 0 0 0 .708-.708L12.5 9.793V7a1.5 1.5 0 0 1 1.5-1.5h1.5a.5.5 0 0 0 0-1H5a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V7.414l-2.146-2.147a.5.5 0 0 0-.708 0l-2.147 2.147z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
-                                                <span class="ml-2 text-blue-500 font-medium">
-                                                    Lihat PDF
-                                                </span>
+                                                target="_blank">
+                                                <img src="{{ route('submission.surat_keluar', $submission->id) }}"
+                                                    alt="Surat Keluar"
+                                                    class="w-40 h-auto border border-gray-300 rounded">
                                             </a>
-                                        </div>
+                                        @endif
                                     @else
-                                        <a href="{{ route('submission.surat_keluar', $submission->id) }}"
-                                            target="_blank">
-                                            <img src="{{ route('submission.surat_keluar', $submission->id) }}"
-                                                alt="Surat Keluar" class="w-40 h-auto border border-gray-300 rounded">
-                                        </a>
+                                        <span>-</span>
                                     @endif
-                                @else
-                                    <span>-</span>
-                                @endif
-                            </td>
+                                </td>
                             @endif
                             <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
                                 <div class="flex space-x-2">
@@ -121,10 +122,19 @@
                                         Lihat
                                     </a>
                                     @can('edit pengajuan')
-                                    <a href="{{ route('submission.edit', ['type_id' => $submission->submission_type_id, 'id' => $submission->id]) }}"
-                                        class="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded">
-                                        Edit
-                                    </a>
+                                        <a href="{{ route('submission.edit', ['type_id' => $submission->submission_type_id, 'id' => $submission->id]) }}"
+                                            class="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded">
+                                            Edit
+                                        </a>
+                                    @endcan
+                                    @can('delete data')
+                                    <form action="{{ route('submission.destroy', ['type_id' => $submission->submission_type_id, 'id' => $submission->id]) }}" method="POST"
+                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="text-white bg-red-500 hover:bg-red-700 py-2 px-4 rounded">Delete</button>
+                                    </form>
                                     @endcan
                                 </div>
                             </td>

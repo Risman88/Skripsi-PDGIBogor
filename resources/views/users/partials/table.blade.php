@@ -50,6 +50,15 @@
                                         Edit
                                     </a>
                                     @endcan
+                                    @can('delete data')
+                                    <div class="flex space-x-2">
+                                        <form action="{{ route('users.delete', $user->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini? Semua data yang berhubungan akan hilang');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-white bg-red-500 hover:bg-red-700 py-2 px-4 rounded">Delete</button>
+                                        </form>
+                                    </div>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

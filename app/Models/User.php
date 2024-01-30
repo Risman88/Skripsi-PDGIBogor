@@ -27,6 +27,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'jenis_kelamin',
         'agama',
         'alamat',
+        'iuran_at', // Pastikan kolom ini ada di sini
+        'iuran_until', // Pastikan kolom ini ada di sini
         'handphone',
     ];
 
@@ -47,6 +49,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'iuran_at' => 'datetime', // Pastikan kolom ini ada di sini
+        'iuran_until' => 'datetime',
     ];
 
     public function submissions()

@@ -11,8 +11,10 @@
                 <select name="role" class="rounded-md px-3 py-2">
                     <option value="">Semua Peran</option>
                     @foreach($roles as $role)
+                    @if ($role->name !== 'superadmin')
                         <option value="{{ $role->name }}" {{ request('role') == $role->name ? 'selected' : '' }}>{{ $role->name }}</option>
-                    @endforeach
+                    @endif
+                @endforeach
                 </select>
                 <button type="submit"
                 class="bg-indigo-600 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded">Cari</button>

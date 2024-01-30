@@ -38,7 +38,7 @@ class PaymentsController extends Controller
     public function indexall(Request $request)
     {
         $user = Auth::user();
-        if ($user->hasAnyRole('admin', 'bendahara')) {
+        if ($user->hasAnyRole('admin', 'bendahara', 'superadmin')) {
             $search = $request->input('search', '');
             $query = Payments::query();
 
@@ -71,14 +71,17 @@ class PaymentsController extends Controller
         $request->validate([
             'bukti_pembayaran' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:1024',
         ]);
-
         if ($request->hasFile('bukti_pembayaran')) {
             $file = $request->file('bukti_pembayaran');
+
+            // Hapus file bukti pembayaran lama dari penyimpanan S3 jika ada
             $oldPath = $payment->bukti_pembayaran;
-            if ($oldPath && Storage::exists($oldPath)) {
-                Storage::delete($oldPath);
+            if (!empty($oldPath)) {
+                Storage::disk('s3')->delete($oldPath);
             }
-            $path = $file->store('public/images/bukti_pembayaran/' . $payment->user_id . '/' . $payment->id);
+
+            // Simpan file bukti pembayaran baru ke penyimpanan S3 dengan path yang sesuai
+            $path = $file->store("bukti_pembayaran/{$payment->user_id}/{$payment->id}", 's3');
 
             $payment->update([
                 'bukti_pembayaran' => $path,
@@ -134,38 +137,60 @@ class PaymentsController extends Controller
      * Show the form for creating a new resource.
      */
 
-     public function bayarIuran(Request $request)
-     {
-         // Konversi pilihan bulan ke jumlah hari dan jumlah pembayaran
-         if ($request->bulan == 3) {
-             $jenis_pembayaran = 'Pembayaran Iuran PDGI Kota Bogor 3 bulan';
-             $jangkaIuran = 90;
-             $jumlahPembayaran = 90000;
-         } elseif ($request->bulan == 6) {
-             $jenis_pembayaran = 'Pembayaran Iuran PDGI Kota Bogor 6 bulan';
-             $jangkaIuran = 180;
-             $jumlahPembayaran = 180000;
-         } elseif ($request->bulan == 12) {
-             $jenis_pembayaran = 'Pembayaran Iuran PDGI Kota Bogor 1 Tahun';
-             $jangkaIuran = 365;
-             $jumlahPembayaran = 350000;
-         } elseif ($request->bulan == 24) {
-             $jenis_pembayaran = 'Pembayaran Iuran PDGI Kota Bogor 2 Tahun';
-             $jangkaIuran = 730;
-             $jumlahPembayaran = 700000;
-         }
+    public function bayarIuran(Request $request)
+    {
+        // Konversi pilihan bulan ke jumlah hari dan jumlah pembayaran
+        if ($request->bulan == 3) {
+            $jenis_pembayaran = 'Pembayaran Iuran PDGI Kota Bogor 3 bulan';
+            $jangkaIuran = 90;
+            $jumlahPembayaran = 90000;
+        } elseif ($request->bulan == 6) {
+            $jenis_pembayaran = 'Pembayaran Iuran PDGI Kota Bogor 6 bulan';
+            $jangkaIuran = 180;
+            $jumlahPembayaran = 180000;
+        } elseif ($request->bulan == 12) {
+            $jenis_pembayaran = 'Pembayaran Iuran PDGI Kota Bogor 1 Tahun';
+            $jangkaIuran = 365;
+            $jumlahPembayaran = 350000;
+        } elseif ($request->bulan == 24) {
+            $jenis_pembayaran = 'Pembayaran Iuran PDGI Kota Bogor 2 Tahun';
+            $jangkaIuran = 730;
+            $jumlahPembayaran = 700000;
+        }
 
-         $payment = new Payments([
-             'user_id' => Auth::id(),
-             'jenis_pembayaran' => $jenis_pembayaran,
-             'jangka_iuran' => $jangkaIuran,
-             'jumlah_pembayaran' => $jumlahPembayaran,
-             'bank_account_id' => 1,
-             'status' => 'Belum dibayar',
-         ]);
+        $payment = new Payments([
+            'user_id' => Auth::id(),
+            'jenis_pembayaran' => $jenis_pembayaran,
+            'jangka_iuran' => $jangkaIuran,
+            'jumlah_pembayaran' => $jumlahPembayaran,
+            'bank_account_id' => 1,
+            'status' => 'Belum dibayar',
+        ]);
 
-         $payment->save();
+        $payment->save();
 
-         return redirect()->route('payments.index')->with('success', 'Silahkan melakukan pembayaran iuran dan unggah bukti bayar');
-     }
+        return redirect()->route('payments.index')->with('success', 'Silahkan melakukan pembayaran iuran dan unggah bukti bayar');
+    }
+    public function destroy(Payments $payment)
+    {
+        // Periksa apakah pengguna memiliki peran 'superadmin'
+        if (Auth::user()->hasRole('superadmin')) {
+            // Periksa apakah pembayaran ditemukan
+            if ($payment) {
+                // Hapus file bukti pembayaran dari S3 jika ada
+                if (!empty($payment->bukti_pembayaran)) {
+                    Storage::disk('s3')->delete($payment->bukti_pembayaran);
+                }
+
+                // Hapus pembayaran
+                $payment->delete();
+
+                return redirect()->route('payments.indexall')
+                    ->with('success', 'Pembayaran berhasil dihapus.');
+            }
+        } else {
+            // Jika pengguna tidak memiliki peran 'superadmin', mungkin Anda ingin mengembalikan respon yang sesuai atau melakukan tindakan lain.
+            return redirect()->route('payments.indexall')->with('error', 'Anda tidak memiliki izin untuk menghapus pembayaran.');
+        }
+    }
 }

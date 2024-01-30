@@ -14,7 +14,7 @@
         <x-text-input type="text" name="title" id="title" value="{{ old('title') }}" class="w-full px-4 py-2 border" required/>
     </div>
     <div>
-        <x-input-label for="title" :value="__('Deksripsi Meeting')" :opsional=true />
+        <x-input-label for="description" :value="__('Deksripsi Meeting')" :opsional=true />
         <textarea name="description" id="description" class="w-full px-4 py-2 border border-gray-300 rounded">{{ old('description') }}</textarea>
     </div>
     <div>

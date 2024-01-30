@@ -52,7 +52,7 @@ class SubmissionController extends Controller
     public function indexall(Request $request)
     {
         $user = Auth::user();
-        if ($user->hasAnyRole('admin', 'bendahara', 'interview')) {
+        if ($user->hasAnyRole('admin', 'bendahara', 'interview', 'superadmin')) {
             $search = $request->input('search');
 
             $baseQuery = Submission::query()->with(['submissionType', 'payment', 'user'])->orderBy('created_at', 'desc')->orderBy('id', 'desc');
@@ -197,7 +197,7 @@ class SubmissionController extends Controller
                 foreach ($scanFiles as $scanFile) {
                     if ($request->hasFile($scanFile)) {
                         $file = $request->file($scanFile);
-                        $path = $file->store('public/images/' . $scanFile . '/' . $submission->user_id . '/' . $submission->id);
+                        $path = $file->store("{$scanFile}/{$submission->user_id}/{$submission->id}", 's3');
                         $SubmissionAnggota->{$scanFile} = $path;
                     }
                 }
@@ -233,7 +233,8 @@ class SubmissionController extends Controller
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
-                    'valid_str' => 'required|date',
+                    'seumur_hidup' => 'required|boolean',
+                    'valid_str' => $request->seumur_hidup ? 'nullable' : 'required|date',
                     'serkom' => 'required|max:25',
                     'npa' => 'required|max:11',
                     'cabang_pdgi' => 'required|max:40',
@@ -276,7 +277,8 @@ class SubmissionController extends Controller
                 foreach ($scanFiles as $scanFile) {
                     if ($request->hasFile($scanFile)) {
                         $file = $request->file($scanFile);
-                        $path = $file->store('public/images/' . $scanFile . '/' . $submission->user_id . '/' . $submission->id);
+                        // Simpan gambar baru ke penyimpanan S3 dengan path yang sesuai
+                        $path = $file->store("{$scanFile}/{$submission->user_id}/{$submission->id}", 's3');
                         $SubmissionIzinPraktik->{$scanFile} = $path;
                     }
                 }
@@ -311,7 +313,8 @@ class SubmissionController extends Controller
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
-                    'valid_str' => 'required|date',
+                    'seumur_hidup' => 'required|boolean',
+                    'valid_str' => $request->seumur_hidup ? 'nullable' : 'required|date',
                     'serkom' => 'required|max:25',
                     'npa' => 'required|max:11',
                     'cabang_pdgi' => 'required|max:40',
@@ -351,7 +354,7 @@ class SubmissionController extends Controller
                 foreach ($scanFiles as $scanFile) {
                     if ($request->hasFile($scanFile)) {
                         $file = $request->file($scanFile);
-                        $path = $file->store('public/images/' . $scanFile . '/' . $submission->user_id . '/' . $submission->id);
+                        $path = $file->store("{$scanFile}/{$submission->user_id}/{$submission->id}", 's3');
                         $SubmissionIzinPraktik->{$scanFile} = $path;
                     }
                 }
@@ -386,7 +389,8 @@ class SubmissionController extends Controller
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
-                    'valid_str' => 'required|date',
+                    'seumur_hidup' => 'required|boolean',
+                    'valid_str' => $request->seumur_hidup ? 'nullable' : 'required|date',
                     'serkom' => 'required|max:25',
                     'npa' => 'required|max:11',
                     'cabang_pdgi' => 'required|max:40',
@@ -426,7 +430,7 @@ class SubmissionController extends Controller
                 foreach ($scanFiles as $scanFile) {
                     if ($request->hasFile($scanFile)) {
                         $file = $request->file($scanFile);
-                        $path = $file->store('public/images/' . $scanFile . '/' . $submission->user_id . '/' . $submission->id);
+                        $path = $file->store("{$scanFile}/{$submission->user_id}/{$submission->id}", 's3');
                         $SubmissionIzinPraktik->{$scanFile} = $path;
                     }
                 }
@@ -461,7 +465,8 @@ class SubmissionController extends Controller
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
-                    'valid_str' => 'required|date',
+                    'seumur_hidup' => 'required|boolean',
+                    'valid_str' => $request->seumur_hidup ? 'nullable' : 'required|date',
                     'serkom' => 'required|max:25',
                     'npa' => 'required|max:11',
                     'cabang_pdgi' => 'required|max:40',
@@ -502,7 +507,7 @@ class SubmissionController extends Controller
                 foreach ($scanFiles as $scanFile) {
                     if ($request->hasFile($scanFile)) {
                         $file = $request->file($scanFile);
-                        $path = $file->store('public/images/' . $scanFile . '/' . $submission->user_id . '/' . $submission->id);
+                        $path = $file->store("{$scanFile}/{$submission->user_id}/{$submission->id}", 's3');
                         $SubmissionIzinPraktik->{$scanFile} = $path;
                     }
                 }
@@ -537,7 +542,8 @@ class SubmissionController extends Controller
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
-                    'valid_str' => 'required|date',
+                    'seumur_hidup' => 'required|boolean',
+                    'valid_str' => $request->seumur_hidup ? 'nullable' : 'required|date',
                     'serkom' => 'required|max:25',
                     'npa' => 'required|max:11',
                     'cabang_pdgi' => 'required|max:40',
@@ -577,7 +583,7 @@ class SubmissionController extends Controller
                 foreach ($scanFiles as $scanFile) {
                     if ($request->hasFile($scanFile)) {
                         $file = $request->file($scanFile);
-                        $path = $file->store('public/images/' . $scanFile . '/' . $submission->user_id . '/' . $submission->id);
+                        $path = $file->store("{$scanFile}/{$submission->user_id}/{$submission->id}", 's3');
                         $SubmissionIzinPraktik->{$scanFile} = $path;
                     }
                 }
@@ -740,7 +746,7 @@ class SubmissionController extends Controller
         $submission = Submission::where('submission_type_id', $type_id)->where('id', $id)->first();
 
         $user = Auth::user();
-        if (!Auth::user()->hasRole('admin')) {
+        if (!Auth::user()->hasAnyRole('admin', 'superadmin')) {
             abort(403, 'Unauthorized access');
         }
         $submissionType = $submission->submission_type_id;
@@ -778,7 +784,7 @@ class SubmissionController extends Controller
         $submission = Submission::where('submission_type_id', $type_id)->where('id', $id)->first();
         $submissionType = $submission->submission_type_id;
 
-        if (!Auth::user()->hasRole('admin')) {
+        if (!Auth::user()->hasAnyRole('admin', 'superadmin')) {
             abort(403, 'Unauthorized access');
         }
 
@@ -805,14 +811,15 @@ class SubmissionController extends Controller
 
                 if ($request->hasFile('surat_keluar')) {
                     $file = $request->file('surat_keluar');
-                    // Hapus gambar lama dari penyimpanan jika ada
+
+                    // Hapus file surat lama dari penyimpanan S3 jika ada
                     $oldPath = $submission->surat_keluar;
-                    if ($oldPath && Storage::exists($oldPath)) {
-                        Storage::delete($oldPath);
+                    if ($oldPath) {
+                        Storage::disk('s3')->delete($oldPath);
                     }
 
-                    // Simpan gambar baru dengan path yang sama
-                    $path = $file->store('public/images/surat_keluar/' . $submission->user_id . '/' . $submission->id);
+                    // Simpan file surat baru ke penyimpanan S3 dengan path yang sesuai
+                    $path = $file->store("surat_keluar/{$submission->user_id}/{$submission->id}", 's3');
                     $submission->update(['surat_keluar' => $path]);
                 }
                 // Mengupdate submission sesuai dengan validasi dan request
@@ -830,14 +837,15 @@ class SubmissionController extends Controller
                 foreach ($scanFiles as $scanFile) {
                     if ($request->hasFile($scanFile)) {
                         $file = $request->file($scanFile);
-                        // Hapus gambar lama dari penyimpanan jika ada
+
+                        // Hapus gambar lama dari penyimpanan S3 jika ada
                         $oldPath = $submissionAnggota->{$scanFile};
-                        if ($oldPath && Storage::exists($oldPath)) {
-                            Storage::delete($oldPath);
+                        if ($oldPath) {
+                            Storage::disk('s3')->delete($oldPath);
                         }
 
-                        // Simpan gambar baru dengan path yang sama
-                        $path = $file->store('public/images/' . $scanFile . '/' . $submission->user_id . '/' . $submission->id);
+                        // Simpan gambar baru ke penyimpanan S3 dengan path yang sesuai
+                        $path = $file->store("{$scanFile}/{$submission->user_id}/{$submission->id}", 's3');
                         $validatedData[$scanFile] = $path;
                     }
                 }
@@ -853,7 +861,8 @@ class SubmissionController extends Controller
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
-                    'valid_str' => 'required|date',
+                    'seumur_hidup' => 'required|boolean',
+                    'valid_str' => $request->seumur_hidup ? 'nullable' : 'required|date',
                     'serkom' => 'required|max:25',
                     'npa' => 'required|max:11',
                     'cabang_pdgi' => 'required|max:40',
@@ -889,14 +898,15 @@ class SubmissionController extends Controller
                 // Mengupdate submission sesuai dengan validasi dan request
                 if ($request->hasFile('surat_keluar')) {
                     $file = $request->file('surat_keluar');
-                    // Hapus gambar lama dari penyimpanan jika ada
+
+                    // Hapus file surat lama dari penyimpanan S3 jika ada
                     $oldPath = $submission->surat_keluar;
-                    if ($oldPath && Storage::exists($oldPath)) {
-                        Storage::delete($oldPath);
+                    if ($oldPath) {
+                        Storage::disk('s3')->delete($oldPath);
                     }
 
-                    // Simpan gambar baru dengan path yang sama
-                    $path = $file->store('public/images/surat_keluar/' . $submission->user_id . '/' . $submission->id);
+                    // Simpan file surat baru ke penyimpanan S3 dengan path yang sesuai
+                    $path = $file->store("surat_keluar/{$submission->user_id}/{$submission->id}", 's3');
                     $submission->update(['surat_keluar' => $path]);
                 }
                 // Mengupdate submission sesuai dengan validasi dan request
@@ -912,14 +922,15 @@ class SubmissionController extends Controller
                 foreach ($scanFiles as $scanFile) {
                     if ($request->hasFile($scanFile)) {
                         $file = $request->file($scanFile);
-                        // Hapus gambar lama dari penyimpanan jika ada
+
+                        // Hapus gambar lama dari penyimpanan S3 jika ada
                         $oldPath = $submissionIzinPraktik->{$scanFile};
-                        if ($oldPath && Storage::exists($oldPath)) {
-                            Storage::delete($oldPath);
+                        if ($oldPath) {
+                            Storage::disk('s3')->delete($oldPath);
                         }
 
-                        // Simpan gambar baru dengan path yang sama
-                        $path = $file->store('public/images/' . $scanFile . '/' . $submission->user_id . '/' . $submission->id);
+                        // Simpan gambar baru ke penyimpanan S3 dengan path yang sesuai
+                        $path = $file->store("{$scanFile}/{$submission->user_id}/{$submission->id}", 's3');
                         $validatedData[$scanFile] = $path;
                     }
                 }
@@ -936,7 +947,8 @@ class SubmissionController extends Controller
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
-                    'valid_str' => 'required|date',
+                    'seumur_hidup' => 'required|boolean',
+                    'valid_str' => $request->seumur_hidup ? 'nullable' : 'required|date',
                     'serkom' => 'required|max:25',
                     'npa' => 'required|max:11',
                     'cabang_pdgi' => 'required|max:40',
@@ -968,14 +980,15 @@ class SubmissionController extends Controller
                 // Mengupdate submission sesuai dengan validasi dan request
                 if ($request->hasFile('surat_keluar')) {
                     $file = $request->file('surat_keluar');
-                    // Hapus gambar lama dari penyimpanan jika ada
+
+                    // Hapus file surat lama dari penyimpanan S3 jika ada
                     $oldPath = $submission->surat_keluar;
-                    if ($oldPath && Storage::exists($oldPath)) {
-                        Storage::delete($oldPath);
+                    if ($oldPath) {
+                        Storage::disk('s3')->delete($oldPath);
                     }
 
-                    // Simpan gambar baru dengan path yang sama
-                    $path = $file->store('public/images/surat_keluar/' . $submission->user_id . '/' . $submission->id);
+                    // Simpan file surat baru ke penyimpanan S3 dengan path yang sesuai
+                    $path = $file->store("surat_keluar/{$submission->user_id}/{$submission->id}", 's3');
                     $submission->update(['surat_keluar' => $path]);
                 }
                 // Mengupdate submission sesuai dengan validasi dan request
@@ -991,14 +1004,15 @@ class SubmissionController extends Controller
                 foreach ($scanFiles as $scanFile) {
                     if ($request->hasFile($scanFile)) {
                         $file = $request->file($scanFile);
-                        // Hapus gambar lama dari penyimpanan jika ada
+
+                        // Hapus gambar lama dari penyimpanan S3 jika ada
                         $oldPath = $submissionIzinPraktik->{$scanFile};
-                        if ($oldPath && Storage::exists($oldPath)) {
-                            Storage::delete($oldPath);
+                        if ($oldPath) {
+                            Storage::disk('s3')->delete($oldPath);
                         }
 
-                        // Simpan gambar baru dengan path yang sama
-                        $path = $file->store('public/images/' . $scanFile . '/' . $submission->user_id . '/' . $submission->id);
+                        // Simpan gambar baru ke penyimpanan S3 dengan path yang sesuai
+                        $path = $file->store("{$scanFile}/{$submission->user_id}/{$submission->id}", 's3');
                         $validatedData[$scanFile] = $path;
                     }
                 }
@@ -1014,7 +1028,8 @@ class SubmissionController extends Controller
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
-                    'valid_str' => 'required|date',
+                    'seumur_hidup' => 'required|boolean',
+                    'valid_str' => $request->seumur_hidup ? 'nullable' : 'required|date',
                     'serkom' => 'required|max:25',
                     'npa' => 'required|max:11',
                     'cabang_pdgi' => 'required|max:40',
@@ -1048,14 +1063,15 @@ class SubmissionController extends Controller
                 // Mengupdate submission sesuai dengan validasi dan request
                 if ($request->hasFile('surat_keluar')) {
                     $file = $request->file('surat_keluar');
-                    // Hapus gambar lama dari penyimpanan jika ada
+
+                    // Hapus file surat lama dari penyimpanan S3 jika ada
                     $oldPath = $submission->surat_keluar;
-                    if ($oldPath && Storage::exists($oldPath)) {
-                        Storage::delete($oldPath);
+                    if ($oldPath) {
+                        Storage::disk('s3')->delete($oldPath);
                     }
 
-                    // Simpan gambar baru dengan path yang sama
-                    $path = $file->store('public/images/surat_keluar/' . $submission->user_id . '/' . $submission->id);
+                    // Simpan file surat baru ke penyimpanan S3 dengan path yang sesuai
+                    $path = $file->store("surat_keluar/{$submission->user_id}/{$submission->id}", 's3');
                     $submission->update(['surat_keluar' => $path]);
                 }
                 // Mengupdate submission sesuai dengan validasi dan request
@@ -1071,14 +1087,15 @@ class SubmissionController extends Controller
                 foreach ($scanFiles as $scanFile) {
                     if ($request->hasFile($scanFile)) {
                         $file = $request->file($scanFile);
-                        // Hapus gambar lama dari penyimpanan jika ada
+
+                        // Hapus gambar lama dari penyimpanan S3 jika ada
                         $oldPath = $submissionIzinPraktik->{$scanFile};
-                        if ($oldPath && Storage::exists($oldPath)) {
-                            Storage::delete($oldPath);
+                        if ($oldPath) {
+                            Storage::disk('s3')->delete($oldPath);
                         }
 
-                        // Simpan gambar baru dengan path yang sama
-                        $path = $file->store('public/images/' . $scanFile . '/' . $submission->user_id . '/' . $submission->id);
+                        // Simpan gambar baru ke penyimpanan S3 dengan path yang sesuai
+                        $path = $file->store("{$scanFile}/{$submission->user_id}/{$submission->id}", 's3');
                         $validatedData[$scanFile] = $path;
                     }
                 }
@@ -1094,7 +1111,8 @@ class SubmissionController extends Controller
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
-                    'valid_str' => 'required|date',
+                    'seumur_hidup' => 'required|boolean',
+                    'valid_str' => $request->seumur_hidup ? 'nullable' : 'required|date',
                     'serkom' => 'required|max:25',
                     'npa' => 'required|max:11',
                     'cabang_pdgi' => 'required|max:40',
@@ -1126,14 +1144,15 @@ class SubmissionController extends Controller
                 // Mengupdate submission sesuai dengan validasi dan request
                 if ($request->hasFile('surat_keluar')) {
                     $file = $request->file('surat_keluar');
-                    // Hapus gambar lama dari penyimpanan jika ada
+
+                    // Hapus file surat lama dari penyimpanan S3 jika ada
                     $oldPath = $submission->surat_keluar;
-                    if ($oldPath && Storage::exists($oldPath)) {
-                        Storage::delete($oldPath);
+                    if ($oldPath) {
+                        Storage::disk('s3')->delete($oldPath);
                     }
 
-                    // Simpan gambar baru dengan path yang sama
-                    $path = $file->store('public/images/surat_keluar/' . $submission->user_id . '/' . $submission->id);
+                    // Simpan file surat baru ke penyimpanan S3 dengan path yang sesuai
+                    $path = $file->store("surat_keluar/{$submission->user_id}/{$submission->id}", 's3');
                     $submission->update(['surat_keluar' => $path]);
                 }
                 // Mengupdate submission sesuai dengan validasi dan request
@@ -1149,14 +1168,15 @@ class SubmissionController extends Controller
                 foreach ($scanFiles as $scanFile) {
                     if ($request->hasFile($scanFile)) {
                         $file = $request->file($scanFile);
-                        // Hapus gambar lama dari penyimpanan jika ada
+
+                        // Hapus gambar lama dari penyimpanan S3 jika ada
                         $oldPath = $submissionIzinPraktik->{$scanFile};
-                        if ($oldPath && Storage::exists($oldPath)) {
-                            Storage::delete($oldPath);
+                        if ($oldPath) {
+                            Storage::disk('s3')->delete($oldPath);
                         }
 
-                        // Simpan gambar baru dengan path yang sama
-                        $path = $file->store('public/images/' . $scanFile . '/' . $submission->user_id . '/' . $submission->id);
+                        // Simpan gambar baru ke penyimpanan S3 dengan path yang sesuai
+                        $path = $file->store("{$scanFile}/{$submission->user_id}/{$submission->id}", 's3');
                         $validatedData[$scanFile] = $path;
                     }
                 }
@@ -1172,7 +1192,8 @@ class SubmissionController extends Controller
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
-                    'valid_str' => 'required|date',
+                    'seumur_hidup' => 'required|boolean',
+                    'valid_str' => $request->seumur_hidup ? 'nullable' : 'required|date',
                     'serkom' => 'required|max:25',
                     'npa' => 'required|max:11',
                     'cabang_pdgi' => 'required|max:40',
@@ -1206,14 +1227,15 @@ class SubmissionController extends Controller
                 // Mengupdate submission sesuai dengan validasi dan request
                 if ($request->hasFile('surat_keluar')) {
                     $file = $request->file('surat_keluar');
-                    // Hapus gambar lama dari penyimpanan jika ada
+
+                    // Hapus file surat lama dari penyimpanan S3 jika ada
                     $oldPath = $submission->surat_keluar;
-                    if ($oldPath && Storage::exists($oldPath)) {
-                        Storage::delete($oldPath);
+                    if ($oldPath) {
+                        Storage::disk('s3')->delete($oldPath);
                     }
 
-                    // Simpan gambar baru dengan path yang sama
-                    $path = $file->store('public/images/surat_keluar/' . $submission->user_id . '/' . $submission->id);
+                    // Simpan file surat baru ke penyimpanan S3 dengan path yang sesuai
+                    $path = $file->store("surat_keluar/{$submission->user_id}/{$submission->id}", 's3');
                     $submission->update(['surat_keluar' => $path]);
                 }
                 // Mengupdate submission sesuai dengan validasi dan request
@@ -1229,14 +1251,15 @@ class SubmissionController extends Controller
                 foreach ($scanFiles as $scanFile) {
                     if ($request->hasFile($scanFile)) {
                         $file = $request->file($scanFile);
-                        // Hapus gambar lama dari penyimpanan jika ada
+
+                        // Hapus gambar lama dari penyimpanan S3 jika ada
                         $oldPath = $submissionIzinPraktik->{$scanFile};
-                        if ($oldPath && Storage::exists($oldPath)) {
-                            Storage::delete($oldPath);
+                        if ($oldPath) {
+                            Storage::disk('s3')->delete($oldPath);
                         }
 
-                        // Simpan gambar baru dengan path yang sama
-                        $path = $file->store('public/images/' . $scanFile . '/' . $submission->user_id . '/' . $submission->id);
+                        // Simpan gambar baru ke penyimpanan S3 dengan path yang sesuai
+                        $path = $file->store("{$scanFile}/{$submission->user_id}/{$submission->id}", 's3');
                         $validatedData[$scanFile] = $path;
                     }
                 }
@@ -1254,16 +1277,18 @@ class SubmissionController extends Controller
                 ]);
                 if ($request->hasFile('surat_keluar')) {
                     $file = $request->file('surat_keluar');
-                    // Hapus gambar lama dari penyimpanan jika ada
+
+                    // Hapus file surat lama dari penyimpanan S3 jika ada
                     $oldPath = $submission->surat_keluar;
-                    if ($oldPath && Storage::exists($oldPath)) {
-                        Storage::delete($oldPath);
+                    if ($oldPath) {
+                        Storage::disk('s3')->delete($oldPath);
                     }
 
-                    // Simpan gambar baru dengan path yang sama
-                    $path = $file->store('public/images/surat_keluar/' . $submission->user_id . '/' . $submission->id);
+                    // Simpan file surat baru ke penyimpanan S3 dengan path yang sesuai
+                    $path = $file->store("surat_keluar/{$submission->user_id}/{$submission->id}", 's3');
                     $submission->update(['surat_keluar' => $path]);
                 }
+
                 // Mengupdate submission sesuai dengan validasi dan request
                 $submission->update([
                     'status' => $validatedData['status'],
@@ -1291,7 +1316,7 @@ class SubmissionController extends Controller
                     $file = $request->file('surat_keluar');
                     // Hapus gambar lama dari penyimpanan jika ada
                     $oldPath = $submission->surat_keluar;
-                    if ($oldPath && Storage::exists($oldPath)) {
+                    if ($oldPath) {
                         Storage::delete($oldPath);
                     }
 
@@ -1320,23 +1345,85 @@ class SubmissionController extends Controller
         return redirect()->route('submission.indexall')->with('success', 'Data berhasil diperbarui.');
     }
 
-/**
- * Remove the specified resource from storage.
- */
-// public function destroy(string $id)
-// {
-//     // Temukan submission berdasarkan ID
-//     $submission = Submission::findOrFail($id);
+    public function destroy(string $type_id, string $id)
+    {
+        $submission = Submission::where('submission_type_id', $type_id)->where('id', $id)->first();
 
-//     // Cek apakah pengguna saat ini memiliki hak untuk menghapus submission ini
-//     if (Auth::user()->hasRole('admin')) {
-//         abort(403, 'Unauthorized access');
-//     }
+        if (!$submission) {
+            return redirect()->route('submission.indexall')->with('error', 'Submission not found.');
+        }
 
-//     // Hapus semua data terkait submission
-//     $submission->delete();
+        if (!Auth::user()->hasRole('superadmin')) {
+            abort(403, 'Unauthorized access');
+        }
 
-//     // Redirect ke halaman sebelumnya dengan pesan sukses
-//     return redirect()->route('submission.indexall')->with('success', 'Submission berhasil dihapus.');
-// }
+        // Hapus file surat keluar dari penyimpanan S3 jika ada
+        $suratKeluarPath = $submission->surat_keluar;
+        if (!empty($suratKeluarPath)) {
+            Storage::disk('s3')->delete($suratKeluarPath);
+        }
+        // Hapus file bukti pembayaran dari penyimpanan S3 jika ada
+        if ($submission->payment) {
+            $payment = $submission->payment;
+
+            $paymentProofPath = $payment->bukti_pembayaran;
+            if (!empty($paymentProofPath)) {
+                Storage::disk('s3')->delete($paymentProofPath);
+            }
+
+            $payment->delete();
+        }
+        switch ($submission->submission_type_id) {
+            case 1:
+                $submissionAnggota = SubmissionAnggota::where('submission_id', $submission->id)->first();
+                $scanFiles = [
+                    'scan_serkom',
+                    'scan_str',
+                    'scan_mutasi',
+                ];
+
+                foreach ($scanFiles as $scanFile) {
+                    $fileToDelete = $submissionAnggota->$scanFile;
+                    if (!empty($fileToDelete)) {
+                        Storage::disk('s3')->delete($fileToDelete);
+                    }
+                }
+
+                $submissionAnggota->delete();
+                break;
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+                // Hapus file-file terkait submission type ini dari penyimpanan S3
+                $submissionIzinPraktik = SubmissionIzinPraktik::where('submission_id', $submission->id)->first();
+                if ($submissionIzinPraktik) {
+                    $scanFiles = [
+                        'surat_praktik1',
+                        'surat_praktik2',
+                        'surat_praktik3',
+                        'scan_serkom',
+                        'scan_str',
+                        'scan_surat_sehat',
+                        'scan_surat_kolegium',
+                        'scan_surat_pengantar',
+                        'surat_mkekg',
+                    ];
+
+                    foreach ($scanFiles as $scanFile) {
+                        $fileToDelete = $submissionIzinPraktik->$scanFile;
+                        if (!empty($fileToDelete)) {
+                            Storage::disk('s3')->delete($fileToDelete);
+                        }
+                    }
+
+                    $submissionIzinPraktik->delete();
+                }
+                break;
+            }
+        $submission->delete();
+
+        return redirect()->route('submission.indexall')->with('success', 'Data berhasil dihapus.');
+    }
 }

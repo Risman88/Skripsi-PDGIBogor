@@ -54,10 +54,28 @@
                         <x-input-error :messages="$errors->get('str')" class="mt-2 text-sm text-red-600" />
                     </div>
                     <div>
-                        <x-input-label for="valid_str" :value="__('Valid STR')" :required="true" />
-                        <x-text-input type="date" name="valid_str" :value="old('valid_str')" class="w-full px-4 py-2 border border-gray-300 rounded" required />
+                        <x-input-label for="valid_str" :value="__('Valid STR')" :required="!old('seumur_hidup')" />
+                        <span class="text-gray-500 text-sm px-1 inline-block">Apabila STR sudah seumur hidup tidak perlu
+                            mengisi tanggal hanya ceklis checkbox</span>
+                        <x-text-input type="date" name="valid_str" :value="old('valid_str')"
+                            class="w-full px-4 py-2 border border-gray-300 rounded" required
+                            :disabled="old('seumur_hidup') ? 'checked' : ''" />
+                            <label class="flex items-center mt-2">
+                                <span class="px-2 text-sm font-bold text-gray-600">STR Seumur Hidup</span>
+                                <input type="hidden" name="seumur_hidup" value="0">
+                                <input type="checkbox" name="seumur_hidup" class="form-checkbox" id="seumur_hidup"
+                                    {{ old('seumur_hidup', false) ? 'checked' : '' }} value="1">
+                            </label>
                         <x-input-error :messages="$errors->get('valid_str')" class="mt-2 text-sm text-red-600" />
                     </div>
+
+                    <script>
+                        document.getElementById('seumur_hidup').addEventListener('change', function() {
+                            var validStrInput = document.getElementsByName('valid_str')[0];
+                            validStrInput.disabled = this.checked;
+                            validStrInput.required = !this.checked;
+                        });
+                    </script>
                     <div>
                         <x-input-label for="scan_str" :value="__('Scan STR')" :required=true />
                         <input type="file" name="scan_str" class="w-full px-4 py-2 border border-gray-300 rounded" required>

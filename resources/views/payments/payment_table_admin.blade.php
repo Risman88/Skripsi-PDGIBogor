@@ -38,9 +38,9 @@
                         <th scope="col" class="py-4 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                             Status
                         </th>
-                        {{-- <th scope="col" class="relative py-4 pl-3 pr-4 sm:pr-6">
+                        <th scope="col" class="relative py-4 pl-3 pr-4 sm:pr-6">
                             <span class="sr-only"></span>
-                        </th> --}}
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
@@ -138,22 +138,18 @@
                                         {{ ucwords($payment->status) }}
                                     </span>
                                 @endcan
-
                             </td>
-                            {{-- <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
+                            <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
+                                @can('delete data')
                                 <div class="flex space-x-2">
-                                    <a href="{{ route('payments.indexall', $payment->id) }}" class="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded">
-                                        Edit
-                                    </a>
-                                    <form action="{{ route('payments.indexall', $payment->id) }}" method="POST">
+                                    <form action="{{ route('payments.destroy', $payment->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="return confirm('Apakah Anda yakin ingin menghapus pembayaran ini?')">
-                                            Hapus
-                                        </button>
+                                        <button type="submit" class="text-white bg-red-500 hover:bg-red-700 py-2 px-4 rounded">Delete</button>
                                     </form>
                                 </div>
-                            </td> --}}
+                                @endcan
+                            </td>
                         </tr>
                     @empty
                         <tr>

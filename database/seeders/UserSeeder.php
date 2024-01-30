@@ -14,6 +14,24 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $superadmin = User::create([
+            'name' => 'superadmin',
+            'email' => 'superadmin@admin.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('password'),
+            'remember_token' => Str::random(10),
+            'tempat_lahir' => 'Jakarta',
+            'tanggal_lahir' => '1990-01-01',
+            'jenis_kelamin' => 'Laki-laki',
+            'agama' => 'Islam',
+            'alamat' => 'Jl. Contoh No.1, Jakarta Pusat',
+            'iuran_at' => now(),
+            'iuran_until' => now(),
+            'handphone' => '081234567890',
+        ]);
+        $superadmin->assignRole ('superadmin');
+        $superadmin->userDocument()->create([]);
+
         $admin = User::create([
             'name' => 'admin',
             'email' => 'admin@admin.com',
@@ -101,7 +119,7 @@ class UserSeeder extends Seeder
             'iuran_until' => now(),
             'handphone' => '081234567890',
         ]);
-        $user->assignRole ('user');
+        $user->assignRole ('non-anggota');
         $user->userDocument()->create([]);
     }
 }

@@ -19,7 +19,7 @@ class ZoomController extends Controller
     public function create()
     {
         $user = Auth::user();
-        if ($user->hasAnyRole('admin', 'interview')) {
+        if ($user->hasAnyRole('admin', 'interview', 'superadmin')) {
 
             $users = User::all();
             return view('zoom.create', compact('users'));
@@ -33,7 +33,7 @@ class ZoomController extends Controller
         $user = Auth::user();
 
         // Pastikan user memiliki salah satu peran 'admin' atau 'interview'
-        if ($user->hasAnyRole('admin', 'interview')) {
+        if ($user->hasAnyRole('admin', 'interview', 'superadmin')) {
             $now = Carbon::now();
 
             $zoomMeetings = ZoomMeeting::where('dibuat_oleh', $user->id)
@@ -50,7 +50,7 @@ class ZoomController extends Controller
     public function indexall(Request $request)
     {
         $user = Auth::user();
-        if ($user->hasAnyRole('admin', 'interview')) {
+        if ($user->hasAnyRole('admin', 'interview', 'superadmin')) {
             $search = $request->input('search', '');
             $now = Carbon::now();
 
