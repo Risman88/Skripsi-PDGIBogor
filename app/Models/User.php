@@ -30,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'iuran_at', // Pastikan kolom ini ada di sini
         'iuran_until', // Pastikan kolom ini ada di sini
         'handphone',
+        'email_verified_at',
     ];
 
     /**

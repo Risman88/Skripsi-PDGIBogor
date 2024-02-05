@@ -229,7 +229,7 @@ class SubmissionController extends Controller
                 // Validasi data yang diterima dari form
                 $validatedData = $request->validate([
                     'praktik_ke' => 'required|in:1,2,3',
-                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP',
+                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP,Pencabutan SIP',
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
@@ -309,7 +309,7 @@ class SubmissionController extends Controller
                 // Validasi data yang diterima dari form
                 $validatedData = $request->validate([
                     'praktik_ke' => 'required|in:1,2,3',
-                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP',
+                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP,Pencabutan SIP',
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
@@ -385,7 +385,7 @@ class SubmissionController extends Controller
                 // Validasi data yang diterima dari form
                 $validatedData = $request->validate([
                     'praktik_ke' => 'required|in:1,2,3',
-                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP',
+                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP,Pencabutan SIP',
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
@@ -461,7 +461,7 @@ class SubmissionController extends Controller
                 // Validasi data yang diterima dari form
                 $validatedData = $request->validate([
                     'praktik_ke' => 'required|in:1,2,3',
-                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP',
+                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP,Pencabutan SIP',
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
@@ -538,7 +538,7 @@ class SubmissionController extends Controller
                 // Validasi data yang diterima dari form
                 $validatedData = $request->validate([
                     'praktik_ke' => 'required|in:1,2,3',
-                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP',
+                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP,Pencabutan SIP',
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
@@ -857,7 +857,7 @@ class SubmissionController extends Controller
             case 2:
                 $validatedData = $request->validate([
                     'praktik_ke' => 'required|in:1,2,3',
-                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP',
+                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP,Pencabutan SIP',
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
@@ -943,7 +943,7 @@ class SubmissionController extends Controller
                 // Validasi data yang diterima dari form
                 $validatedData = $request->validate([
                     'praktik_ke' => 'required|in:1,2,3',
-                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP',
+                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP,Pencabutan SIP',
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
@@ -1024,7 +1024,7 @@ class SubmissionController extends Controller
                 // Validasi data yang diterima dari form
                 $validatedData = $request->validate([
                     'praktik_ke' => 'required|in:1,2,3',
-                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP',
+                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP,Pencabutan SIP',
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
@@ -1079,7 +1079,7 @@ class SubmissionController extends Controller
                     'status' => $validatedData['status'],
                     'updated_by' => auth()->user()->id,
                 ]);
-                if ($validatedData['status'] === 'Selesai') {
+                if (isset($validatedData['status']) && $validatedData['status'] === 'Selesai') {
                     Mail::to($submission->user->email)->send(new SubmissionCompletedUserNotification($submission));
                 }
                 // Mengupdate data untuk Submission Type 4
@@ -1107,7 +1107,7 @@ class SubmissionController extends Controller
                 // Validasi data yang diterima dari form
                 $validatedData = $request->validate([
                     'praktik_ke' => 'required|in:1,2,3',
-                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP',
+                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP,Pencabutan SIP',
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',
@@ -1188,7 +1188,7 @@ class SubmissionController extends Controller
                 // Validasi data yang diterima dari form
                 $validatedData = $request->validate([
                     'praktik_ke' => 'required|in:1,2,3',
-                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP',
+                    'tujuan_surat' => 'required|in:Pembuatan SIP,Perpanjangan SIP,Pindah Alamat SIP,Pencabutan SIP',
                     'alumni_drg' => 'required|max:50',
                     'tahun_lulus' => 'required|numeric|digits:4',
                     'str' => 'required|max:25',

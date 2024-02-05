@@ -67,7 +67,7 @@
                         <li>
                             <div class="flex items-center gap-x-6">
                                 <img src="{{ route('organisasi.photo', $anggota->id) }}" alt="Photo_URL"
-                                    class="w-8 h-auto border border-gray-300 rounded">
+                                    class="w-64 h-64 border border-gray-300 rounded" loading="lazy">
                                 <div>
                                     <h3 class="text-base font-semibold leading-7 tracking-tight text-gray-900">
                                         {{ $anggota->nama }}</h3>

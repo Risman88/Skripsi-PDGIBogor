@@ -4,6 +4,11 @@
     </x-slot>
 
     <div class="w-full max-w-md mx-auto">
+        <!-- Notes -->
+        <div class="bg-yellow-200 p-2 text-black text-sm font-bold text-center mb-4 rounded">
+            Notes: Sebelum mengajukan pengajuan anggota, WAJIB sudah melakukan pendaftaran akun pada E-Sertifikasi PDGI <a href="https://sertifikasi.pdgi.or.id/pendaftaran-akun" target="_blank" class="text-blue-500">Klik untuk melakukan pendaftaran E-Sertifikasi</a>.
+        </div>
+
         <div class="bg-indigo-300 p-2 text-black text-2xl font-bold text-center mb-4 rounded">
             <span>Data Pengajuan</span>
         </div>

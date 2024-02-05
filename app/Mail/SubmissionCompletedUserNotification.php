@@ -52,7 +52,7 @@ class SubmissionCompletedUserNotification extends Mailable
     public function attachments(): array
     {
         return [
-            Attachment::fromStorage($this->submission->surat_keluar)
+            Attachment::fromStorageDisk('s3', $this->submission->surat_keluar)
         ];
     }
 }

@@ -56,12 +56,12 @@ class RegisteredUserController extends Controller
         ]);
 
         $user->userDocument()->create([]);
-        $user->assignRole('user');
+        $user->assignRole('non-anggota');
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect('/')->with('warning', 'Anda merupakan pengguna baru, silahkan <a href="' . route('profile.edit') . '">klik disini</a> untuk Unggah Dokumen agar dapat melakukan pengajuan');
+        return redirect('/dashboard')->with('warning', 'Anda merupakan pengguna baru, silahkan <a href="' . route('profile.edit') . '">klik disini</a> untuk Unggah Dokumen agar dapat melakukan pengajuan');
     }
 }

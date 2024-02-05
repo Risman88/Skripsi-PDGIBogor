@@ -21,7 +21,7 @@ class GalleryController extends Controller
                 return $query->where('title', 'like', '%' . $search . '%');
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(8);
 
         return view('gallery.index', compact('galleries'));
     }

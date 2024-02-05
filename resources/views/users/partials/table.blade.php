@@ -37,7 +37,12 @@
                             <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
                                 {{ $user->email }}</td>
                             <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
-                                {{ \Carbon\Carbon::parse($user->iuran_until)->format('d F Y') }}</td>
+                                @if ($user->iuran_until)
+                                    {{ \Carbon\Carbon::parse($user->iuran_until)->format('d F Y') }}
+                                @else
+                                    Tidak ada data iuran
+                                @endif
+                            </td>
                             <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
                                 <div class="flex space-x-2">
                                     <a href="{{ route('users.show', ['user' => $user->id]) }}"
@@ -45,19 +50,21 @@
                                         Lihat
                                     </a>
                                     @can('edit user')
-                                    <a href="{{ route('users.edit', ['user' => $user->id]) }}"
-                                        class="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded">
-                                        Edit
-                                    </a>
+                                        <a href="{{ route('users.edit', ['user' => $user->id]) }}"
+                                            class="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded">
+                                            Edit
+                                        </a>
                                     @endcan
                                     @can('delete data')
-                                    <div class="flex space-x-2">
-                                        <form action="{{ route('users.delete', $user->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini? Semua data yang berhubungan akan hilang');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-white bg-red-500 hover:bg-red-700 py-2 px-4 rounded">Delete</button>
-                                        </form>
-                                    </div>
+                                        <div class="flex space-x-2">
+                                            <form action="{{ route('users.delete', $user->id) }}" method="POST"
+                                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini? Semua data yang berhubungan akan hilang');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="text-white bg-red-500 hover:bg-red-700 py-2 px-4 rounded">Delete</button>
+                                            </form>
+                                        </div>
                                     @endcan
                                 </div>
                             </td>

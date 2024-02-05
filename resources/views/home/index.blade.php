@@ -90,7 +90,7 @@
                             <li x-bind="disableNextAndPreviousButtons"
                                 class="flex flex-col items-center justify-center w-full p-0 shrink-0 snap-start"
                                 role="option">
-                                <img class="mx-auto " src={{ route('slideshow.banner', $slideshow->id) }}>
+                                <img class="mx-auto" src={{ route('slideshow.banner', $slideshow->id) }} loading="lazy">
                             </li>
                         @endforeach
                     </ul>

@@ -32,6 +32,9 @@
                             <option value="Pembuatan SIP" {{ old('tujuan_surat') == 'Pembuatan SIP' ? 'selected' : '' }}>Pembuatan SIP</option>
                             <option value="Perpanjangan SIP" {{ old('tujuan_surat') == 'Perpanjangan SIP' ? 'selected' : '' }}>Perpanjangan SIP</option>
                             <option value="Pindah Alamat SIP" {{ old('tujuan_surat') == 'Pindah Alamat SIP' ? 'selected' : '' }}>Pindah Alamat SIP</option>
+                            <option value="Pencabutan SIP" {{ old('tujuan_surat') == 'Pencabutan SIP' ? 'selected' : '' }}>
+                                Pencabutan SIP
+                            </option>
                         </select>
                         <x-input-error :messages="$errors->get('tujuan_surat')" class="mt-2 text-sm text-red-600" />
                     </div>

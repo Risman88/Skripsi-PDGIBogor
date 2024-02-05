@@ -48,6 +48,8 @@ Route::patch('/user/document/update', [ProfileController::class, 'addDocument'])
 });
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/users/admin', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('users/store', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/{user}', [UserController::class, 'showUserProfile'])->name('users.show');
     Route::get('users/{user}/edit', [UserController::class, 'editUser'])->name('users.edit');
     Route::put('/users/{user}/profile/update', [UserController::class, 'updateUserProfile'])->name('users.updateProfile');

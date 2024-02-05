@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -16,6 +17,7 @@ class UserController extends Controller
     {
         $search = $request->input('search');
         $role = $request->input('role');
+        $showUnpaid = $request->input('show_unpaid'); // Menambahkan input untuk menunjukkan iuran yang belum dibayar
 
         $roles = Role::all();
         if (!Auth::user()->hasAnyRole('admin', 'interview', 'bendahara', 'superadmin')) {
@@ -32,6 +34,11 @@ class UserController extends Controller
             ->whereDoesntHave('roles', function ($query) {
                 $query->where('name', 'superadmin');
             })
+            ->when($showUnpaid, function ($query) {
+                // Hanya menampilkan yang iuran_until lebih dari tanggal sekarang dan tidak null
+                $query->whereNotNull('iuran_until')
+                    ->where('iuran_until', '<', now());
+            })
             ->paginate(10);
 
         return view('users.index', compact('users', 'roles'));
@@ -43,6 +50,54 @@ class UserController extends Controller
             abort(403, 'Unauthorized access');
         }
         return view('users.show', compact('user'));
+    }
+
+    public function create()
+    {
+        if (!Auth::user()->hasAnyRole('admin', 'superadmin')) {
+            abort(403, 'Unauthorized access');
+        }
+        return view('users.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            // Sesuaikan dengan kebutuhan validasi Anda
+            'name' => 'required|string|max:60',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string|min:8',
+            'tempat_lahir' => 'required|string|max:20',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'agama' => 'required|string|max:10',
+            'alamat' => 'required|string',
+            'handphone' => 'required|string|max:15',
+            'iuran_at' => 'required|date',
+            'iuran_until' => 'required|date',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'agama' => $request->agama,
+            'alamat' => $request->alamat,
+            'handphone' => $request->handphone,
+            'email_verified_at' => now(), // Admin langsung mengonfirmasi verifikasi email
+            'iuran_at' => $request->iuran_at,
+            'iuran_until' => $request->iuran_until,
+        ]);
+        dd($user);
+
+        $user->userDocument()->create([]);
+        $user->assignRole('anggota');
+
+        // Redirect atau berikan respons sesuai kebutuhan
+        return redirect()->route('users.index')->with('success', 'User berhasil dibuat.');
     }
 
     public function editUser(User $user)
