@@ -38,6 +38,10 @@ class Payments extends Model
     {
         return $this->belongsTo(BankAccount::class);
     }
+    public function scopeWithBankAccount($query)
+    {
+        return $query->with('bankAccount');
+    }
     protected static function booted()
     {
         static::deleting(function ($payment) {

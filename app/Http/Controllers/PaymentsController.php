@@ -23,11 +23,13 @@ class PaymentsController extends Controller
         $user = Auth::user();
 
         $unpaidAndPendingPayments = $user->payments()
+            ->with('bankAccount')
             ->whereIn('status', ['belum dibayar', 'menunggu konfirmasi'])
             ->orderBy('created_at', 'desc')
             ->paginate(5, ['*'], 'unpaid_and_pending_page');
 
         $completedPayments = $user->payments()
+            ->with('bankAccount')
             ->where('status', 'lunas')
             ->orderBy('created_at', 'desc')
             ->paginate(5, ['*'], 'completed_page');
@@ -40,7 +42,7 @@ class PaymentsController extends Controller
         $user = Auth::user();
         if ($user->hasAnyRole('admin', 'bendahara', 'superadmin')) {
             $search = $request->input('search', '');
-            $query = Payments::query();
+            $query = Payments::query()->with(['user', 'bankAccount', 'updatedBy']); // Tambahkan eager loading disini
 
             if ($search) {
                 $query->whereHas('user', function ($query) use ($search) {

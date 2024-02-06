@@ -82,12 +82,12 @@ class PanduanController extends Controller
         // Jika panduan ditemukan, hapus
         if ($panduan) {
             $panduan->delete();
-            return redirect()->route('faq.index')
+            return redirect()->route('panduan.index')
                 ->with('success', 'Panduan berhasil dihapus.');
         }
 
         // Jika panduan tidak ditemukan, tampilkan pesan error
-        return redirect()->route('faq.index')
+        return redirect()->route('panduan.index')
             ->with('error', 'Panduan tidak ditemukan.');
     }
 }
