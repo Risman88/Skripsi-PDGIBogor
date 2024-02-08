@@ -19,8 +19,8 @@ class SlideshowFactory extends Factory
     public function definition(): array
     {
         return [
-            'image_url' => 'public/images/banner',
-            'caption' => 'asdf',
+            'image_url' => 'images/banner/evc9VyzquXnLOA8lt45VwbJrfGBiXT8yoxmbneyQ.png',
+            'caption' => '',
         ];
     }
 }

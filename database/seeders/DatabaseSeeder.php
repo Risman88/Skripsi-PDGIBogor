@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             BankAccountSeeder::class,
             SubmissionTypeSeeder::class,
             SubmissionSeeder::class,
+            SlideshowSeeder::class,
         ]);
     }
 }

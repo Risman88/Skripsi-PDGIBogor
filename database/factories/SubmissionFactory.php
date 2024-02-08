@@ -17,9 +17,9 @@ class SubmissionFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => $this->faker->numberBetween(1, 4),
+            'user_id' => $this->faker->numberBetween(2, 5),
             'submission_type_id' => $this->faker->numberBetween(1, 8),
-            'status' => $this->faker->randomElement(['Diproses', 'Selesai', 'Ditolak']),
+            'status' => $this->faker->randomElement(['Diproses', 'Ditolak']),
             'surat_keluar' => $this->faker->imageUrl(400, 400),
         ];
     }

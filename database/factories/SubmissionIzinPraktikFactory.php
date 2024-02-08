@@ -18,7 +18,7 @@ class SubmissionIzinPraktikFactory extends Factory
     {
         return [
             'praktik_ke' => $this->faker->randomElement(['1', '2', '3']),
-            'tujuan_surat' => $this->faker->randomElement(['Pembuatan SIP', 'Perpanjangan SIP', 'Pindah Alamat SIP']),
+            'tujuan_surat' => $this->faker->randomElement(['Pembuatan SIP', 'Perpanjangan SIP', 'Pindah Alamat SIP', 'Pencabutan SIP']),
             'alumni_drg' => $this->faker->company,
             'tahun_lulus' => $this->faker->year,
             'str' => $this->faker->unique()->regexify('/^\d{2}\.\d{1}\.\d{1}\.\d{3}\.\d{1}\.\d{2}\.\d{6}$/'),

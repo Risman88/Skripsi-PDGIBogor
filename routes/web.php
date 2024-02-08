@@ -89,24 +89,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('gallery', GalleryController::class);
 });
 
-Route::get('/insert-fake-data', function () {
-    $faker = Faker\Factory::create();
-
-    for ($i = 0; $i < 10; $i++) {
-        DB::table('zoom_meetings')->insert([
-            'title' => $faker->sentence,
-            'description' => $faker->text,
-            'start_time' => Carbon::now()->addDays(rand(1, 30)),
-            'duration' => rand(30, 120),
-            'link_zoom' => $faker->url,
-            'untuk_id' => rand(1, 5),
-            'dibuat_oleh' => rand(1, 2),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-    }
-
-    return 'Data fake berhasil ditambahkan!';
-});
-
 require __DIR__ . '/auth.php';
