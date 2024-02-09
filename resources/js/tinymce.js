@@ -1,11 +1,11 @@
 import "tinymce/tinymce";
 import "tinymce/skins/ui/oxide/skin.min.css";
 import "tinymce/skins/content/default/content.min.css";
-import "tinymce/skins/content/default/content.css";
-import "tinymce/icons/default/icons";
-import "tinymce/themes/silver/theme";
-import "tinymce/models/dom/model";
+import 'tinymce/icons/default/icons.min.js';
+import 'tinymce/themes/silver/theme.min.js';
+import 'tinymce/models/dom/model.min.js';
 import "tinymce/plugins/advlist";
+import "tinymce/plugins/lists";
 import "tinymce/plugins/image";
 
 window.addEventListener("DOMContentLoaded", () => {

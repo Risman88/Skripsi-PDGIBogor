@@ -18,7 +18,7 @@ class SubmissionPpdgsFactory extends Factory
     {
         return [
             'npa' => $this->faker->unique()->regexify('/^\d{4}\.\d{6}$/'),
-            'nama_univ' => $this->faker->company,
+            'nama_univ' => $this->faker->text(40),
         ];
     }
 }

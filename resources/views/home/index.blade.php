@@ -91,6 +91,16 @@
                                 class="flex flex-col items-center justify-center w-full p-0 shrink-0 snap-start"
                                 role="option">
                                 <img class="mx-auto" src={{ route('slideshow.banner', $slideshow->id) }} loading="lazy">
+                                <!-- Indicator buttons -->
+                                <div class="flex justify-center space-x-2">
+                                    <template x-for="(slide, index) in Array.from($refs.slider.children)"
+                                        :key="index">
+                                        <button @click="goToSlide(index)"
+                                            :class="{ 'bg-gray-500': currentSlide === index, 'bg-gray-300': currentSlide !==
+                                                    index }"
+                                            class="w-3 h-1 rounded-full lg:w-5 hover:bg-gray-400 focus:outline-none focus:bg-gray-400"></button>
+                                    </template>
+                                </div>
                             </li>
                         @endforeach
                     </ul>
@@ -121,17 +131,6 @@
                         </span>
                         <span class="sr-only">Skip to next slide page</span>
                     </button>
-                </div>
-                <!-- Indicators -->
-
-                <div class="absolute z-10 w-full bottom-12 lg:bottom-24">
-                    <div class="flex justify-center space-x-2">
-                        <template x-for="(slide, index) in Array.from($refs.slider.children)" :key="index">
-                            <button @click="goToSlide(index)"
-                                :class="{ 'bg-gray-500': currentSlide === index, 'bg-gray-300': currentSlide !== index }"
-                                class="w-3 h-1 rounded-full lg:w-5 hover:bg-gray-400 focus:outline-none focus:bg-gray-400"></button>
-                        </template>
-                    </div>
                 </div>
             </div>
         </div>

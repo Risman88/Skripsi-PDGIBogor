@@ -14,7 +14,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+<body class="flex flex-col h-screen">
 <div>
     <!-- Header -->
     <header style="background-color:rgb(139, 49, 180);" x-data="{ open: false }" @keydown.window.escape="open = false" class="absolute inset-x-0 top-0 z-50">
@@ -78,14 +78,16 @@
       </div>
     </header>
 
-    <main class="isolate bg-white">
+    <main class="flex-grow">
       <div class="mb-10">
         {{ $slot }}
       </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800">
+
+  </div>
+      <!-- Footer -->
+      <footer class="bg-gray-800 mt-auto">
         <div class="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
           <div class="flex justify-center space-x-6 md:order-2">
             <a href="https://www.instagram.com/pdgikotabogor/" class="text-gray-400 hover:text-gray-500" target="_blank" style="position: relative; z-index: 1;">
@@ -100,6 +102,5 @@
           </div>
         </div>
       </footer>
-  </div>
 </body>
 </html>

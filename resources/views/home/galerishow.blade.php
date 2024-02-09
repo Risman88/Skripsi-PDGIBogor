@@ -12,7 +12,7 @@
                     <div class="bg-white p-4 shadow-md rounded-md">
                         <a href="{{ route('show.galleries', $image->id) }}" target="_blank">
                         <img src="{{ route('show.galleries', $image->id) }}"
-                        alt="{{ $gallery->title }}" class="w-full h-96 object-cover mb-2">
+                        alt="{{ $gallery->title }}" class="w-full h-full object-cover mb-2">
                         </a>
                     </div>
                 @endforeach

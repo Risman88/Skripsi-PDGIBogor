@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Slideshow extends Model
 {
+    use HasFactory;
     protected $fillable = ['image_url', 'caption'];
 }

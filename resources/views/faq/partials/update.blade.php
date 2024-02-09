@@ -1,5 +1,5 @@
 <section>
-    @vite([ 'resources/js/tinyMCE.js' ])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/tinymce.js'])
     <header>
         <h2 class="text-lg font-medium text-gray-900">
             {{ __('Edit Data Panduan') }}
