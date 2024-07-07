@@ -18,4 +18,7 @@ Skripsi Aplikasi PDGI Kota Bogor untuk
 <br>
 • Pembagian Role User yang meliputi Non Anggota, Anggota, Admin, Bendahara, Tim Interview
 <br>
+• Penyimpanan gambar pada AWS S3 serta menggunakan temporary URL untuk tiap gambar
+<br>
+
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
