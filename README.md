@@ -16,7 +16,7 @@ Skripsi Aplikasi PDGI Kota Bogor untuk
 <br>
 • Pengajuan surat-surat rekomendasi untuk anggota dan non-anggota
 <br>
-• Pembagian Role User yang meliputi Non Anggota, Anggota, Admin, Bendahara, Tim Interview
+• Pembagian Role User yang meliputi Non Anggota, Anggota, Admin, Bendahara, Tim Interview menggunakan Spatie Laravel Permission
 <br>
 • Penyimpanan gambar pada AWS S3 serta menggunakan temporary URL untuk tiap gambar
 <br>
