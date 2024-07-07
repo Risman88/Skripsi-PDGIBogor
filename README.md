@@ -7,6 +7,10 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-Skripsi Aplikasi PDGI Kota Bogor untuk kebutuhan pengajuan menjadi anggota, pembayaran iuran anggota, pengajuan surat-surat rekomendasi untuk anggota dan non-anggota berbasis Laravel
+Skripsi Aplikasi PDGI Kota Bogor untuk 
+• Kebutuhan pengajuan menjadi anggota dengan Interview melalui Zoom Meeting
+• Pembayaran iuran anggota yang di konfirmasi oleh Bendahara
+• Pengajuan surat-surat rekomendasi untuk anggota dan non-anggota
+• Pembagian Role User yang meliputi Non Anggota, Anggota, Admin, Bendahara, Tim Interview
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
